@@ -14,7 +14,7 @@ add_custom_target(
    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/lib/infomap/"
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall -Wextra -fopenmp -mavx2 -mfma -ffast-math")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall -Wextra -fopenmp -march=native -ffast-math")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3") # abuse for dev builds
 # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D _GLIBCXX_DEBUG -D _GLIBXX_DEBUG_PEDANTIC") # out of bounds asserts
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=leak -fsanitize=undefined") # sanitize all the things
