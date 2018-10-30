@@ -6,10 +6,12 @@
 #include <thrill/api/reduce_by_key.hpp>
 #include <thrill/api/size.hpp>
 #include <thrill/api/sum.hpp>
+#include <thrill/api/write_lines.hpp>
 #include <thrill/api/write_binary.hpp>
 #include <thrill/api/zip_with_index.hpp>
 
 #include <vector>
+#include <string>
 #include <cstdlib>
 #include <sparsepp/spp.h>
 
@@ -231,7 +233,10 @@ auto performAndEvaluate(int argc, char const *argv[], const std::string& algo, c
     }
 
     size_t cluster_count = node_clusters.Keep().Map([](const NodeCluster& node_cluster) { return node_cluster.second; }).Uniq().Size();
-
+    
+    auto fname =std::string("output.cluster");
+    node_clusters.Keep().Map([](const NodeCluster& node_cluster) { return std::to_string(node_cluster.first) + " " + std::to_string(node_cluster.second); }).WriteLines(fname);
+    
     auto eval_graph = Input::readToNodeGraph(argv[1], context);
     eval_graph.nodes.Keep();
     double modularity = ClusteringQuality::modularity(eval_graph, node_clusters.Keep());
